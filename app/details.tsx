@@ -1,20 +1,20 @@
-import { useLocalSearchParams } from "expo-router";
+import { Stack, useLocalSearchParams } from "expo-router";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
-type DetailsProps = {
-  name: String;
-  children?: React.ReactNode;
-};
 const Details = () => {
   const params = useLocalSearchParams();
   const pageStlyle = {
     backgroundColor: params.pageColor,
   };
 
-  console.log(params);
   return (
     <View style={[pageStlyle, style.container]}>
+      <Stack.Screen
+        options={{
+          title: params.colorName + " page",
+        }}
+      />
       <Text
         style={{
           color: params.color,

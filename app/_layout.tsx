@@ -20,7 +20,19 @@ export default function RootLayout() {
           title: "my home",
         }}
       />
-      <Stack.Screen name="details" />
+      <Stack.Screen
+        options={{
+          title: "My details",
+          headerTitleStyle: {
+            fontWeight: "bold",
+          },
+          // headerTitle: (props) => {
+          //   console.log("props:::", props);
+          //   return <Text> {props.color} </Text>;
+          // },
+        }}
+        name="details"
+      />
     </Stack>
   );
 }

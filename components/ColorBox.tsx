@@ -6,6 +6,7 @@ interface ColorBoxProps {
   color: String;
   hexCode: String;
   children?: React.ReactNode;
+  colorName: String;
 }
 
 const ColorBox: React.FC<ColorBoxProps> = ({ color, hexCode }) => {
@@ -29,6 +30,7 @@ const ColorBox: React.FC<ColorBoxProps> = ({ color, hexCode }) => {
           name: "naveen",
           pageColor: hexCode,
           color: textColor.color,
+          colorName: color,
         },
       }}
       style={styles.colorContainer}
