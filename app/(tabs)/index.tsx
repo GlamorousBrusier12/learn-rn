@@ -1,8 +1,19 @@
+import ColorBox from "@/components/ColorBox";
 import GlobalStyles from "@/components/GlobalStyles";
-import React from "react";
-import { View, SafeAreaView, Text, StyleSheet } from "react-native";
+import React, { useState } from "react";
+import { View, SafeAreaView, Text, StyleSheet, FlatList } from "react-native";
 
 const App = () => {
+  const colors = [
+    "pink",
+    "cyan",
+    "magenta",
+    "orange",
+    "green",
+    "yellow",
+    "violet",
+  ];
+  const [u, setU] = useState<boolean>(false);
   return (
     <SafeAreaView style={GlobalStyles.androidSafeArea}>
       <View
@@ -13,65 +24,18 @@ const App = () => {
         <View>
           <Text style={styles.a}>Here are some colors...</Text>
         </View>
-        <View style={[styles.colorContainer, styles.pink]}>
-          <Text
-            style={{
-              color: "white",
-            }}
-          >
-            Hello world pink
-          </Text>
-        </View>
-        <View style={[styles.colorContainer, styles.cyan]}>
-          <Text
-            style={{
-              color: "white",
-            }}
-            onPress={() => {
-              alert("hello naveen");
-            }}
-          >
-            Hello world cyan
-          </Text>
-        </View>
-        <View style={[styles.colorContainer, styles.magenta]}>
-          <Text
-            style={{
-              justifyContent: "center",
-              color: "white",
-            }}
-          >
-            Hello world Magenta
-          </Text>
-        </View>
-        <View style={[styles.colorContainer, styles.orange]}>
-          <Text
-            style={{
-              justifyContent: "center",
-              color: "white",
-            }}
-          >
-            Hello world Orange
-          </Text>
-        </View>
+        <FlatList
+          data={colors}
+          keyExtractor={(item) => item}
+          renderItem={({ item }) => <ColorBox color={item} />}
+          extraData={u}
+        />
       </View>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  pink: {
-    backgroundColor: "pink",
-  },
-  cyan: {
-    backgroundColor: "#2aa198",
-  },
-  magenta: {
-    backgroundColor: "#d33682",
-  },
-  orange: {
-    backgroundColor: "#cb4b16",
-  },
   container: {
     alignItems: "center",
     margin: 2,
@@ -79,14 +43,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     justifyContent: "center",
   },
-  colorContainer: {
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 10,
-    margin: 5,
-    borderRadius: 5,
-    marginHorizontal: 10,
-  },
+
   a: {
     marginLeft: 10,
     fontWeight: "bold",
