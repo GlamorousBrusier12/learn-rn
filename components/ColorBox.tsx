@@ -1,25 +1,28 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { SectionList, StyleSheet, Text, View } from "react-native";
 
 interface ColorBoxProps {
   color: String;
+  hexCode: String;
   children?: React.ReactNode;
 }
 
-const ColorBox: React.FC<ColorBoxProps> = ({ color }) => {
+const ColorBox: React.FC<ColorBoxProps> = ({ color, hexCode }) => {
   const [num, setNum] = useState<Number>(0);
   const boxColor: { backgroundColor: String } = {
-    backgroundColor: color,
+    backgroundColor: hexCode,
+  };
+
+  const textColor: { color: String } = {
+    color:
+      parseInt(hexCode.replace("#", ""), 16) > 0xffffff / 1.1
+        ? "black"
+        : "white",
   };
 
   return (
     <View style={[styles.colorContainer, boxColor]}>
-      <Text
-        style={{
-          color: "white",
-        }}
-        onPress={() => setNum(num + 1)}
-      >
+      <Text style={textColor} onPress={() => setNum(num + 1)}>
         Hello world {color} X {num}
       </Text>
     </View>
