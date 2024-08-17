@@ -2,7 +2,15 @@ import ColorBox from "@/components/ColorBox";
 import GlobalStyles from "@/components/GlobalStyles";
 import { Link, useNavigation } from "expo-router";
 import React, { useCallback, useEffect, useState } from "react";
-import { View, SafeAreaView, Text, StyleSheet, FlatList } from "react-native";
+import {
+  RefreshControl,
+  View,
+  SafeAreaView,
+  Text,
+  StyleSheet,
+  FlatList,
+} from "react-native";
+// import { RefreshControl } from "react-native-gesture-handler";
 
 type colorsType = {
   colorName: String;
@@ -11,11 +19,9 @@ type colorsType = {
 const App = () => {
   const [u, setU] = useState<boolean>(false);
   const [colors, setColors] = useState<colorsType[]>([]);
-  const navigation = useNavigation();
+  const [refreshing, setRefreshing] = useState<boolean>(false);
 
-  useEffect(() => {
-    navigation.setOptions({ headerShown: true });
-  }, [navigation]);
+  const navigation = useNavigation();
 
   const getColors = useCallback(async () => {
     let result = await fetch(
@@ -26,9 +32,21 @@ const App = () => {
 
     setColors(result[0].colors);
   }, []);
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    setColors([]);
+    getColors();
+    setRefreshing(false);
+  }, []);
+
   useEffect(() => {
     getColors();
   }, []);
+
+  useEffect(() => {
+    navigation.setOptions({ headerShown: true });
+  }, [navigation]);
 
   return (
     <SafeAreaView style={GlobalStyles.androidSafeArea}>
@@ -51,6 +69,9 @@ const App = () => {
               <Text style={styles.a}>Here are some colors...</Text>
             </View>
           )}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
         />
       </View>
     </SafeAreaView>
