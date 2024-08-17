@@ -1,34 +1,34 @@
 import ColorBox from "@/components/ColorBox";
 import GlobalStyles from "@/components/GlobalStyles";
 import { Link, useNavigation } from "expo-router";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { View, SafeAreaView, Text, StyleSheet, FlatList } from "react-native";
 
+type colorsType = {
+  colorName: String;
+  hexCode: String;
+};
 const App = () => {
-  const colors = [
-    { colorName: "Base03", hexCode: "#002b36" },
-    { colorName: "Base02", hexCode: "#073642" },
-    { colorName: "Base01", hexCode: "#586e75" },
-    { colorName: "Base00", hexCode: "#657b83" },
-    { colorName: "Base0", hexCode: "#839496" },
-    { colorName: "Base1", hexCode: "#93a1a1" },
-    { colorName: "Base2", hexCode: "#eee8d5" },
-    { colorName: "Base3", hexCode: "#fdf6e3" },
-    { colorName: "Yellow", hexCode: "#b58900" },
-    { colorName: "Orange", hexCode: "#cb4b16" },
-    { colorName: "Red", hexCode: "#dc322f" },
-    { colorName: "Magenta", hexCode: "#d33682" },
-    { colorName: "Violet", hexCode: "#6c71c4" },
-    { colorName: "Blue", hexCode: "#268bd2" },
-    { colorName: "Cyan", hexCode: "#2aa198" },
-    { colorName: "Green", hexCode: "#859900" },
-  ];
   const [u, setU] = useState<boolean>(false);
+  const [colors, setColors] = useState<colorsType[]>([]);
   const navigation = useNavigation();
 
   useEffect(() => {
     navigation.setOptions({ headerShown: true });
   }, [navigation]);
+
+  const getColors = useCallback(async () => {
+    let result = await fetch(
+      "https://color-palette-api.kadikraman.vercel.app/palettes",
+    );
+
+    result = await result.json();
+
+    setColors(result[0].colors);
+  }, []);
+  useEffect(() => {
+    getColors();
+  }, []);
 
   return (
     <SafeAreaView style={GlobalStyles.androidSafeArea}>
