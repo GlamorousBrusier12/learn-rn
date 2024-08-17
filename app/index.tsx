@@ -32,9 +32,6 @@ const App = () => {
 
   return (
     <SafeAreaView style={GlobalStyles.androidSafeArea}>
-      {/* <Link href={{ pathname: "/details", params: { name: "naveen" } }}>
-        Go to Details
-      </Link> */}
       <View
         style={{
           flex: 1,
@@ -42,6 +39,8 @@ const App = () => {
       >
         <FlatList
           data={colors}
+          // horizontal={true}
+          // scrollEnabled={true}
           keyExtractor={(item) => item.hexCode}
           renderItem={({ item }) => (
             <ColorBox color={item.colorName} hexCode={item.hexCode} />
@@ -73,6 +72,10 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     paddingHorizontal: 20,
     fontSize: 18,
+  },
+  b: {
+    flexDirection: "row",
+    flex: 1,
   },
 });
 export default App;

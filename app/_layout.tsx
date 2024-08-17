@@ -26,10 +26,6 @@ export default function RootLayout() {
           headerTitleStyle: {
             fontWeight: "bold",
           },
-          // headerTitle: (props) => {
-          //   console.log("props:::", props);
-          //   return <Text> {props.color} </Text>;
-          // },
         }}
         name="details"
       />

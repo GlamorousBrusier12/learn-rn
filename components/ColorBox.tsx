@@ -1,4 +1,4 @@
-import { Link } from "expo-router";
+import { Link, useNavigation } from "expo-router";
 import React, { useState } from "react";
 import { SectionList, StyleSheet, Text, View } from "react-native";
 
@@ -11,6 +11,7 @@ interface ColorBoxProps {
 
 const ColorBox: React.FC<ColorBoxProps> = ({ color, hexCode }) => {
   const [num, setNum] = useState<Number>(0);
+  const navigation = useNavigation();
   const boxColor: { backgroundColor: String } = {
     backgroundColor: hexCode,
   };
@@ -23,24 +24,34 @@ const ColorBox: React.FC<ColorBoxProps> = ({ color, hexCode }) => {
   };
 
   return (
-    <Link
-      href={{
-        pathname: "/details",
-        params: {
-          name: "naveen",
-          pageColor: hexCode,
-          color: textColor.color,
-          colorName: color,
-        },
-      }}
-      style={styles.colorContainer}
-    >
-      <View style={[styles.colorContainer, boxColor]}>
-        <Text style={textColor} onPress={() => setNum(num + 1)}>
-          Hello world {color}
-        </Text>
-      </View>
-    </Link>
+    // <Link
+    //   href={{
+    //     pathname: "/details",
+    //     params: {
+    //       name: "naveen",
+    //       pageColor: hexCode,
+    //       color: textColor.color,
+    //       colorName: color,
+    //     },
+    //   }}
+    //   style={styles.colorContainer}
+    // >
+    <View style={[styles.colorContainer, boxColor]}>
+      <Text
+        style={textColor}
+        onPress={() =>
+          navigation.navigate("details", {
+            name: "naveen",
+            pageColor: hexCode,
+            color: textColor.color,
+            colorName: color,
+          })
+        }
+      >
+        Hello world {color}
+      </Text>
+    </View>
+    // </Link>
   );
 };
 
