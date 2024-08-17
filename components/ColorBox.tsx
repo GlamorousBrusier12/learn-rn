@@ -1,3 +1,4 @@
+import { Link } from "expo-router";
 import React, { useState } from "react";
 import { SectionList, StyleSheet, Text, View } from "react-native";
 
@@ -21,11 +22,23 @@ const ColorBox: React.FC<ColorBoxProps> = ({ color, hexCode }) => {
   };
 
   return (
-    <View style={[styles.colorContainer, boxColor]}>
-      <Text style={textColor} onPress={() => setNum(num + 1)}>
-        Hello world {color} X {num}
-      </Text>
-    </View>
+    <Link
+      href={{
+        pathname: "/details",
+        params: {
+          name: "naveen",
+          pageColor: hexCode,
+          color: textColor.color,
+        },
+      }}
+      style={styles.colorContainer}
+    >
+      <View style={[styles.colorContainer, boxColor]}>
+        <Text style={textColor} onPress={() => setNum(num + 1)}>
+          Hello world {color}
+        </Text>
+      </View>
+    </Link>
   );
 };
 
@@ -37,6 +50,7 @@ const styles = StyleSheet.create({
     margin: 5,
     borderRadius: 5,
     marginHorizontal: 10,
+    width: 350,
   },
 });
 
